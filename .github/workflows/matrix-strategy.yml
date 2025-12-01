@@ -1,0 +1,34 @@
+name: Matrix Strategy Demo
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  node-matrix:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: ['16', '18', '20']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Display versions
+        run: |
+          node -v
+          npm -v
+
+      - name: Run matrix specific script
+        run: node -e "console.log('Matrix run for Node', process.version, 'on', process.platform)"

@@ -1,0 +1,26 @@
+name: Docker Image Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build container image
+        run: |
+          docker build \
+            --tag gh-actions-demo:${{ github.sha }} \
+            .
+
+      - name: List resulting image
+        run: docker images gh-actions-demo:${{ github.sha }}

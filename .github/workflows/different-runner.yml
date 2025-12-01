@@ -1,0 +1,39 @@
+name: Different Runner Demo
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  ubuntu-job:
+    name: Ubuntu runner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show environment
+        run: |
+          uname -a
+          lsb_release -a || true
+
+  windows-job:
+    name: Windows runner
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show environment
+        shell: powershell
+        run: |
+          Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version
+          $PSVersionTable
+
+  macos-job:
+    name: macOS runner
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show environment
+        run: |
+          sw_vers
+          system_profiler SPSoftwareDataType | head -n 20
