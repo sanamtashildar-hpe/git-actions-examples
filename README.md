@@ -7,3 +7,14 @@ Sample GitHub Actions workflows included in this repository:
 - `docker-build.yml` – builds the sample `Dockerfile` using Docker Buildx on every push to `main`.
 - `sequential-workflow.yml` – runs build → test → deploy stages sequentially via `needs` dependencies.
 - `parallel-workflow.yml` – runs linting, static analysis, and integration tests in parallel with no dependencies.
+
+## Pytest sample
+
+The `src/sample_app` package contains a simple calculator module that is covered by pytest cases in `tests/test_calculator.py`.
+
+To install the dev dependency and run the suite locally:
+
+```powershell
+python -m pip install -r requirements.txt
+pytest
+```
